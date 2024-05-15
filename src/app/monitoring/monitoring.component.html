@@ -1,160 +1,180 @@
+<div class="filter">
+  <mat-accordion multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> Filtro </mat-panel-title>
+        <mat-panel-description>
+          <button mat-menu-item (click)="refreshButton($event)">
+            <span>🔄️</span>
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-<nav>
-    <div class="menu">
-      <h2>
-        SN Monitor 
-      <br/> 
-        <i>{{this.user.name}}</i>
-      </h2>
-      
-      <button mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon><img src="../../assets/menu.svg" alt=""></mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="perfil()">
-          <span>Perfil</span>
-        </button>
-        <button mat-menu-item  (click)="passwordNew()">
-          <span>Alterar Senha</span>
-        </button>
-        <button mat-menu-item  (click)="config()">
-          <span>Configuração</span>
-        </button>
-        <button mat-menu-item [matMenuTriggerFor]="submenu">
-          Cadastro
-        </button>
-        <mat-menu #submenu="matMenu">
-          <button mat-menu-item (click)="addCompany()">
-            <span>Empresa</span>
+      <div class="statusapps">
+        <mat-form-field>
+          <mat-label>Filtro</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input />
+        </mat-form-field>
+        <mat-checkbox
+          [(ngModel)]="isChecked"
+          (change)="checkboxChanged()"
+          (ngModelChange)="changecheckbox(isChecked)"
+          >Pendente</mat-checkbox
+        >
+        <hr />
+        <mat-form-field>
+          <mat-label>Situação</mat-label>
+          <select
+            matNativeControl
+            name="situation"
+            (change)="situationChanged($event)"
+          >
+            <option value="1" selected>Ativo</option>
+            <option value="0">Cancelado</option>
+          </select>
+        </mat-form-field>
+        <br />
+        <span>Status App</span>
+        <mat-checkbox
+          [indeterminate]="!isAllTrue() && !isAllFalse()"
+          [checked]="isAllTrue()"
+          (click)="toggleAll()"
+        ></mat-checkbox>
+        <div class="emojis">
+          <section *ngFor="let item of statusApps">
+            <mat-checkbox (click)="emoji(item)" [checked]="item.active">{{
+              item.icon
+            }}</mat-checkbox>
+          </section>
+        </div>
+      </div>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+<app-navbar></app-navbar>
+
+<section> 
+  <div id="table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="statusApp">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          matTooltip="{{ element.nameDataBase }} {{ element.hours }}"
+        >
+          <button mat-menu-item [matMenuTriggerFor]="submenu">
+            {{ element.statusAppIcon }}
           </button>
-          <button mat-menu-item  (click)="addUser()">
-            <span>Usuário</span>
-          </button>
-        </mat-menu>
-        <button mat-menu-item  (click)="auth.signOut()">
-          <span>Sair</span>
-        </button>
-      </mat-menu>
-    </div>
-    <div class="filter">
-      <mat-accordion multi>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              Filtro
-            </mat-panel-title>
-            <mat-panel-description>
-              <button mat-menu-item  (click)="refreshButton($event)">
-                <span>🔄️</span>
-              </button>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-            
-            <div class="statusapps">
-              <mat-form-field>
-                <mat-label>Filtro</mat-label>
-                <input matInput (keyup)="applyFilter($event)" #input>
-              </mat-form-field>
-              <mat-checkbox [(ngModel)]="isChecked" (change)="checkboxChanged()" (ngModelChange)="changecheckbox(isChecked)">Pendente</mat-checkbox>
-              <hr>
-              <mat-form-field>
-                <mat-label>Situação</mat-label>
-                <select matNativeControl name="situation" (change)="situationChanged($event)">
-                  <option value="1" selected>Ativo</option>
-                  <option value="0">Cancelado</option>
-                </select>
-              </mat-form-field>
-              <br>
-              <span>Status App</span>
-              <mat-checkbox [indeterminate]="!isAllTrue() && !isAllFalse()" [checked]="isAllTrue()" (click)="toggleAll()"></mat-checkbox>
-              <div class="emojis">
-                <section *ngFor="let item of statusApps" >
-                  <mat-checkbox (click)="emoji(item)" [checked]="item.active">{{ item.icon }}</mat-checkbox>
-                </section>
-              </div>
+          <mat-menu #submenu="matMenu" class="custom-menu">
+            <div mat-menu-item *ngFor="let item of element.statusAppLog">
+              <span matTooltip="{{ item.obs }}">{{ item.description }}</span>
             </div>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-    
-</nav>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="%">
+        <th mat-header-cell *matHeaderCellDef>%</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngStyle]="getColorStyle(element)"
+        >
+          {{ element.percentage }}
+        </td>
+      </ng-container>
 
-<section>
-    <div id="table">
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        <ng-container matColumnDef="statusApp">
-          <th mat-header-cell *matHeaderCellDef> </th>
-          <td mat-cell *matCellDef="let element" matTooltip="{{element.nameDataBase}} {{element.hours}}">
-            <button mat-menu-item [matMenuTriggerFor]="submenu">
-              {{element.statusAppIcon}}
-            </button>
-            <mat-menu #submenu="matMenu" class="custom-menu">
-              <div mat-menu-item *ngFor="let item of element.statusAppLog">
-                <span  matTooltip="{{ item.obs }}">{{ item.description }}</span>
-              </div>
-            </mat-menu>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="%">
-          <th mat-header-cell *matHeaderCellDef> % </th>
-          <td mat-cell *matCellDef="let element" [ngStyle]="getColorStyle(element)"
-          > {{element.percentage}} </td>
-        </ng-container>
+      <ng-container matColumnDef="caminhoPasta">
+        <th mat-header-cell *matHeaderCellDef>Nome</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClickedPending(element)"
+        >
+          {{ element.caminhoPasta }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="caminhoPasta">
-          <th mat-header-cell *matHeaderCellDef> Nome </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClickedPending(element)"> {{element.caminhoPasta}}</td>
-        </ng-container>
+      <ng-container matColumnDef="dateCurrent">
+        <th mat-header-cell *matHeaderCellDef>Data</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClick(element)"
+          matTooltip="{{ element.nameDataBase }} {{ element.hours }}"
+        >
+          {{ element.dateCurrent }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="select">
+            {{ element.status }}
+          </button>
+          <mat-menu #menu="matMenu">
+            <ng-container *ngFor="let situation of situations">
+              <button mat-menu-item (click)="changestatus(element, situation)">
+                <span>{{ situation }}</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="nameCurrent">
+        <th mat-header-cell *matHeaderCellDef>Arq. Atual</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClickedPending(element)"
+        >
+          {{ element.nameCurrent }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="dateCurrent">
-          <th mat-header-cell *matHeaderCellDef> Data </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClick(element)" matTooltip="{{element.nameDataBase}} {{element.hours}}"> {{element.dateCurrent}} </td>
-        </ng-container>
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Status </th>
-          <td mat-cell *matCellDef="let element">
-            <button mat-icon-button [matMenuTriggerFor]="menu" class="select">
-              {{element.status}}
-            </button>
-              <mat-menu #menu="matMenu">
-                <ng-container *ngFor="let situation of situations">
-                  <button mat-menu-item (click)="changestatus(element, situation)">
-                    <span>{{situation}}</span>
-                  </button>
-                </ng-container>
-              </mat-menu>
-          </td>
-        </ng-container>
-        <ng-container matColumnDef="nameCurrent">
-          <th mat-header-cell *matHeaderCellDef> Arq. Atual </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClickedPending(element)"> {{element.nameCurrent}} </td>
-        </ng-container>
+      <ng-container matColumnDef="sizeCurrent">
+        <th mat-header-cell *matHeaderCellDef>Tam. Atual</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClickedPending(element)"
+        >
+          {{ element.sizeCurrent }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="sizeCurrent">
-          <th mat-header-cell *matHeaderCellDef> Tam. Atual </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClickedPending(element)"> {{element.sizeCurrent}} </td>
-        </ng-container>
+      <ng-container matColumnDef="namePrevious">
+        <th mat-header-cell *matHeaderCellDef>Arq. Anterior</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClickedPending(element)"
+        >
+          {{ element.namePrevious }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="namePrevious">
-          <th mat-header-cell *matHeaderCellDef> Arq. Anterior </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClickedPending(element)"> {{element.namePrevious}} </td>
-        </ng-container>
+      <ng-container matColumnDef="sizePrevious">
+        <th mat-header-cell *matHeaderCellDef>Tam. Anterior</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          (click)="rowClickedPending(element)"
+        >
+          {{ element.sizePrevious }}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="sizePrevious">
-          <th mat-header-cell *matHeaderCellDef> Tam. Anterior </th>
-          <td mat-cell *matCellDef="let element" (click)="rowClickedPending(element)"> {{element.sizePrevious}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="9">Nenhum dado correspondente ao filtro "{{input.value}}"</td>
-        </tr>
-      </table>
-    </div>
-    <div>{{this.user.name}}</div>
-    <div class="row">{{row}}</div>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="9">
+          Nenhum dado correspondente ao filtro "{{ input.value }}"
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="row">{{ row }}</div>
 </section>
-

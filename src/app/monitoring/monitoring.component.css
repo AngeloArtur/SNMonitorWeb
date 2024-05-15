@@ -4,9 +4,9 @@
   position: fixed;
   z-index: 10;
   display: flex;
-  position: fixed;
   top: 4em; 
   right: 2.9em;
+  justify-content: space-between;
 }
 
 .filter mat-checkbox{
