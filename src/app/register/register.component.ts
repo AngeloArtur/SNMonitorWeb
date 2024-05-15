@@ -6,23 +6,7 @@ import { MonitoringService } from '../service/monitoring.service';
 import { ConfigDialogComponent } from '../shared/components/config-dialog/config-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { LicenseDialogComponent } from '../shared/components/license-dialog/license-dialog.component';
-
-export interface Register {
-  razaoSocial: string;
-  status: string;
-  email: string;
-  responsavel: string;
-  telefone: string;
-  acesso: string;
-  senha: string;
-  qtdLoja: string;
-  estado: string;
-  so: string;
-  observacao: string;
-  config: any;
-  expirationDate: string;
-}
-
+import { Register } from '../interfaces/Register.interface';
 
 @Component({
   selector: 'app-register',
@@ -175,7 +159,7 @@ export class RegisterComponent implements OnInit, DoCheck {
       this.pasta = JSON.parse((await this.MonitoringService.getDataRegister(cnpj)).config.bancos)[0].caminhopasta;   
     }
 
-  this.razaoSocial = ((await this.MonitoringService.getDataRegister(cnpj)).razaoSocial).toLowerCase().replace(/\b\w/g, (match) => match.toUpperCase());
+  this.razaoSocial = ((await this.MonitoringService.getDataRegister(cnpj)).razaoSocial).toLowerCase().replace(/\b\w/g, (match: string) => match.toUpperCase());
   this.status = (await this.MonitoringService.getDataRegister(cnpj)).status;
   this.acesso = (await this.MonitoringService.getDataRegister(cnpj)).acesso;
   this.senha = (await this.MonitoringService.getDataRegister(cnpj)).senha;
@@ -185,7 +169,7 @@ export class RegisterComponent implements OnInit, DoCheck {
   this.observacao = (await this.MonitoringService.getDataRegister(cnpj)).observacao;
   this.email = (await this.MonitoringService.getDataRegister(cnpj)).email;
   this.telefone = (await this.MonitoringService.getDataRegister(cnpj)).telefone;
-  this.responsavel = ((await this.MonitoringService.getDataRegister(cnpj)).responsavel).toLowerCase().replace(/\b\w/g, (match) => match.toUpperCase());
+  this.responsavel = ((await this.MonitoringService.getDataRegister(cnpj)).responsavel).toLowerCase().replace(/\b\w/g, (match: string) => match.toUpperCase());
   this.expirationDate = (await this.MonitoringService.getDataRegister(cnpj)).expirationDate;
   this.status = this.status === "1" ? "Ativo": "Cancelado";
 

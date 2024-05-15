@@ -2,18 +2,16 @@ import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { AuthService } from '../../../service/auth.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MonitoringService } from '../../../service/monitoring.service';
-import { Token } from '../../../monitoring/monitoring.component';
 import { GenerateTokenDialogComponent } from '../generate-token-dialog/generate-token-dialog.component';
-
-
+import { Token } from '../../../interfaces/DropBoxEntry.interface';
 
 @Component({
   selector: 'app-config-dropbox-dialog',
   templateUrl: './config-dropbox-dialog.component.html',
   styleUrl: './config-dropbox-dialog.component.css'
 })
-export class ConfigDropboxDialogComponent implements OnInit{
 
+export class ConfigDropboxDialogComponent implements OnInit{
   password: string = "";
   emailRemetente: string = "";
   clientId: string = "";

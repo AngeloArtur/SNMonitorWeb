@@ -5,9 +5,8 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MonitoringService } from './monitoring.service';
 import { EmailService } from './email.service';
-import { Send, logMonitoring } from '../monitoring/monitoring.component';
 import { formatDate } from '@angular/common';
-
+import { Send, logMonitoring } from '../interfaces/LogMonitoring.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,18 +1,11 @@
 import { Component, DoCheck, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatTable, MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MonitoringService } from '../../../service/monitoring.service';
 import { AuthService } from '../../../service/auth.service';
 import { NewDataBaseDialogComponent } from '../new-data-base-dialog/new-data-base-dialog.component';
 import { DropboxService } from '../../../service/dropbox.service';
-
-export interface Config {
-  databasename: string,
-  caminhodapasta: string,
-  firstSchedule: string,
-  secondSchedule: string
-}
-
+import { Config } from '../../../interfaces/Config.interface';
 
 @Component({
   selector: 'app-config-dialog',
@@ -161,10 +154,8 @@ export class ConfigDialogComponent implements DoCheck {
 
     function selectRow(rowId: any) {
       var tableRow = document.getElementById(rowId);
-  
       if (tableRow) {
-          tableRow.style.backgroundColor = 'var(--primary-color)';
-         
+          tableRow.style.backgroundColor = 'var(--primary-color)';        
       } 
     }
   }
@@ -205,4 +196,3 @@ export class ConfigDialogComponent implements DoCheck {
   }
 
 }
-

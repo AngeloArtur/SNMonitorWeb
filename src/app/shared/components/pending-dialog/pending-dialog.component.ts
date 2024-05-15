@@ -2,9 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MonitoringService } from '../../../service/monitoring.service';
 import { AuthService } from '../../../service/auth.service';
-import { EmailService } from '../../../service/email.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Send } from '../../../monitoring/monitoring.component';
+import { Send } from '../../../interfaces/LogMonitoring.interface';
 
 @Component({
   selector: 'app-pending-dialog',
