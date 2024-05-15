@@ -1,0 +1,31 @@
+<div class="col_left">
+  <div class="row_left">
+          
+      <div
+        cdkDropList
+        class="info_lista_clientes"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListSortPredicate]="sortPredicate"
+      >
+        <div
+          *ngFor="let item of dataSource[0]?.list; let i = index"
+          class="example-box"
+          [cdkDragData]="item"
+          cdkDrag
+        >
+          <p>{{ item }}</p>
+        </div>
+      </div>
+  </div>
+
+  
+  <button
+    class="button-save"
+    mat-stroked-button
+    color="primary"
+    (click)="setDataList()"
+  >
+    Save
+  </button>
+
+</div>

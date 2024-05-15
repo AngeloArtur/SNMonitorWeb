@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Ajustes</h2>
+<mat-dialog-content class="mat-typography">
+  <div *ngIf="logData" class="logDataList">
+    <p>Cliente em Processo: {{ logData.clientInProcess }}</p>
+    <form action="" [formGroup]="myForm">
+      <mat-form-field class="example-full-width">
+        <mat-label>Número de Tentativas Max: </mat-label>
+        <input
+          matInput
+          value="{{ logData.numberTentativaMax }}"
+          formControlName="numberField"
+        />
+      </mat-form-field>
+      <div
+        *ngIf="
+          numberField?.invalid && (numberField?.dirty || numberField?.touched)
+        "
+      >
+        <div *ngIf="numberField?.errors?.['required']">
+          This field is required.
+        </div>
+        <div *ngIf="numberField?.errors?.['min']">
+          The value must be greater than 0.
+        </div>
+      </div>
+      <!-- value="{{ logData.numberlastFiveLines }}" -->
+      <mat-form-field class="example-full-width">
+        <mat-label>Últimas 5 linhas: </mat-label>
+        <input
+          matInput
+          value="{{ logData.numberlastFiveLines }}"
+          formControlName="numberField1"
+        />
+      </mat-form-field>
+      <div
+        *ngIf="
+          numberField1?.invalid &&
+          (numberField1?.dirty || numberField1?.touched)
+        "
+      >
+        <div *ngIf="numberField1?.errors?.['required']">
+          This field is required.
+        </div>
+        <div *ngIf="numberField1?.errors?.['min']">
+          The value must be greater than 0.
+        </div>
+      </div>
+
+      <button
+        mat-stroked-button
+        color="primary"
+        [disabled]="myForm.invalid"
+        (click)="submitInformations()"
+      >
+        Modificar valores
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="!logData">
+    <p>No log data available.</p>
+  </div>
+</mat-dialog-content>

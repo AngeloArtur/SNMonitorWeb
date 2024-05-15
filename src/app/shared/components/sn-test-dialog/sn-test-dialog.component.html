@@ -1,0 +1,47 @@
+<nav>
+  <div class="menu">
+    <h2>
+      SN Monitor
+      <br />
+      <i>{{ this.user.name }}</i>
+    </h2>
+    <button class="logout" (click)="signOut()">
+      <mat-icon><img src="../../assets/voltar.svg" alt="" /></mat-icon>
+    </button>
+  </div>
+</nav>
+
+<div class="container_snTest">
+
+  <div class="col_right">
+    <div class="row_right">
+      <div class="info_snTest">
+        <h2 class="title_info">Log</h2>
+      </div>
+      <div class="info_lista_clientes">
+        <div class="example-box">
+          <mat-card-content *ngIf="logData">
+            <div class="card-info" *ngFor="let data of logData">
+              <p [innerHTML]="data" class="data-list"></p>
+            </div>
+          </mat-card-content>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="button_snTest">
+    <button mat-stroked-button color="primary" (click)="setRefreshTrue()">
+      Refresh
+    </button>
+    <button mat-stroked-button color="primary" (click)="setRestartTrue()">
+      Restart App
+    </button>
+    <button mat-stroked-button color="primary" (click)="openDialog()">
+      Ajustes
+    </button>
+    <button mat-stroked-button color="primary" (click)="openDialogClientes()">
+      Clientes
+    </button>
+  </div>
+</div>
