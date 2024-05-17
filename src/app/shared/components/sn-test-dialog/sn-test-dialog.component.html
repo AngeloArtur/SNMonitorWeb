@@ -12,24 +12,6 @@
 </nav>
 
 <div class="container_snTest">
-
-  <div class="col_right">
-    <div class="row_right">
-      <div class="info_snTest">
-        <h2 class="title_info">Log</h2>
-      </div>
-      <div class="info_lista_clientes">
-        <div class="example-box">
-          <mat-card-content *ngIf="logData">
-            <div class="card-info" *ngFor="let data of logData">
-              <p [innerHTML]="data" class="data-list"></p>
-            </div>
-          </mat-card-content>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="button_snTest">
     <button mat-stroked-button color="primary" (click)="setRefreshTrue()">
       Refresh
@@ -44,4 +26,42 @@
       Clientes
     </button>
   </div>
+  
+  <div class="info_lista_clientes">
+    <div class="info_snTest">
+      <h2 class="title_info">Log</h2>
+    </div>
+    <div class="content-box">
+      <div class="card-title">
+        <div class="card-header">
+          <span>Titulo</span>
+        </div>
+        <div class="card-content">
+          <mat-card-content
+            class="card-item"
+            *ngFor="let parts of titleParts"
+            [innerHTML]="parts"
+          ></mat-card-content>
+        </div>
+      </div>
+      <mat-card class="card-info">
+        <p>Status: <strong>{{ vStatus }}</strong> </p>
+      </mat-card>
+      <div class="exemplo-box">
+        <mat-card-content *ngIf="logData | json">
+          <div class="card-info">
+            <p>vData</p>
+            <p [innerHTML]="vData" class="data-list"></p>
+          </div>
+        </mat-card-content>
+        <mat-card-content *ngIf="logData | json">
+          <div class="card-info">
+            <p>vLog</p>
+            <p [innerHTML]="vLog" class="data-list"></p>
+          </div>
+        </mat-card-content>
+      </div>
+    </div>
+  </div>
+
 </div>

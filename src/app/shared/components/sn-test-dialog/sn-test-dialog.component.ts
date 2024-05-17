@@ -15,7 +15,7 @@ import { TestData } from '../../../interfaces/LogMonitoring.interface';
 })
 export class SnTestDialogComponent implements OnInit {
   displayedColumns: string[] = ['name'];
-  dataSource: TableData[] = [];
+  dataSource: TableData | undefined;
   variavel: any;
   arraySupermercados: string[] = []; // Alterado para um array unidimensional
   savedPositions: string[] = [];
@@ -29,6 +29,11 @@ export class SnTestDialogComponent implements OnInit {
   restart: boolean = false;
 
   logData: string[] = [];
+  vData: string = '';
+  vTitle: string = '';
+  vLog: string = '';
+  vStatus: string = '';
+  titleParts: string[] = [];
 
   constructor(
     private monitoringService: MonitoringService,
@@ -39,9 +44,10 @@ export class SnTestDialogComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.getData();
+    await this.getData();
     this.user = this.auth.UserAuth();
-    await this.showLogData();
+    await this.showLog();
+    this.splitHtmlString();
   }
 
   signOut(): void {
@@ -73,7 +79,7 @@ export class SnTestDialogComponent implements OnInit {
           restart: data.settings?.restartApp,
         };
 
-        this.dataSource = [tableData];
+        this.dataSource = tableData;
       } else {
         console.error('Dados do Firebase não disponíveis.');
       }
@@ -137,69 +143,78 @@ export class SnTestDialogComponent implements OnInit {
       .catch((error) => {
         console.error('Erro ao modificar o valor:', error);
       });
-      this.restart = false;
+    this.restart = false;
   }
 
-  async showLog(): Promise<TableData> {
-    const endpoints: string[] = ['title', 'status', 'dateHourProcess', 'logs'];
-    let valores: any = '';
-    for (let i of endpoints) {
+  async showLog(): Promise<void> {
+    const endpoints = ['title', 'status', 'dateHourProcess', 'logs'];
+
+    for (let endpoint of endpoints) {
       const dataTeste = await this.monitoringService.getLogDataTest(
-        this.dataSource[0].clientInProcess,
-        this.dataSource[0].databaseInProcess,
-        i
+        this.dataSource?.clientInProcess,
+        this.dataSource?.databaseInProcess,
+        endpoint
       );
-      valores += dataTeste;
-    }
-
-    return valores;
-  }
-
-  async showLogData(): Promise<void> {
-    try {
-      const endpoints: string[] = [
-        'title',
-        'status',
-        'dateHourProcess',
-        'logs',
-      ];
-      const valores: string[] = [];
-      for (let i of endpoints) {
-        const dataTeste = await this.monitoringService.getLogDataTest(
-          this.dataSource[0]?.clientInProcess,
-          this.dataSource[0]?.databaseInProcess,
-          i
-        );
-        if (dataTeste) {
-          valores.push(dataTeste);
-        } else {
-          console.warn(`Nenhum dado retornado para '${i}'.`);
-        }
+      // console.log(endpoint, dataTeste);
+      switch (endpoint) {
+        case 'title':
+          this.vTitle = dataTeste.toString();
+          break;
+        case 'status':
+          this.vStatus = dataTeste.toString();
+          break;
+        case 'dateHourProcess':
+          this.vData = dataTeste.toString();
+          break;
+        case 'logs':
+          this.vLog = dataTeste.toString();
+          break;
       }
-      if (valores.length === 0) {
-        console.warn('Nenhum dado retornado para nenhum endpoint.');
-      } else {
-        console.log('Dados do log:', valores);
-      }
-      this.logData = valores;
-    } catch (error) {
-      console.error('Erro ao obter dados do log:', error);
     }
   }
+
+  splitHtmlString(): void {
+    const regex = /<br\/><br\/>/g;
+    this.titleParts = this.vTitle.split(regex);
+  }
+
+  // async showLogData(): Promise<void> {
+  //   try {
+  //     const dataTeste = await this.monitoringService.getLogDataTest(
+  //       this.dataSource?.clientInProcess,
+  //       this.dataSource?.databaseInProcess,
+  //       'title'
+  //     );
+  //     this.vTitle = dataTeste?.toString();
+  //     const dataTeste1 = await this.monitoringService.getLogDataTest(
+  //       this.dataSource?.clientInProcess,
+  //       this.dataSource?.databaseInProcess,
+  //       'status'
+  //     );
+  //     this.vStatus = dataTeste1;
+
+  //     console.log('dataTeste', dataTeste);
+  //     console.log('dataTeste1', dataTeste1);
+  //     const dataTeste2 = await this.monitoringService.getLogDataTest(
+  //       this.dataSource?.clientInProcess,
+  //       this.dataSource?.databaseInProcess,
+  //       'dateHourProcess'
+  //     );
+  //     this.vData = dataTeste2;
+  //     const dataTeste3 = await this.monitoringService.getLogDataTest(
+  //       this.dataSource?.clientInProcess,
+  //       this.dataSource?.databaseInProcess,
+  //       'logs'
+  //     );
+  //     this.vLog = dataTeste3;
+  //   } catch (error) {
+  //     console.error('Erro ao obter dados do log:', error);
+  //   }
+  // }
 
   async openDialog() {
-    const dataTeste = await this.getData();
-
-    // Criar um novo objeto com as propriedades necessárias
-    const dialogData = {
-      logData: dataTeste,
-    };
-    console.log(this.showLog());
-    console.log(dialogData, 'exibir dialogData');
-
     const dialogRef = this.dialog.open(SnTestLogComponent, {
       width: '50rem',
-      data: dialogData,
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -210,7 +225,7 @@ export class SnTestDialogComponent implements OnInit {
   async openDialogClientes() {
     const dialogRef = this.dialog.open(SnTestListComponent, {
       width: '45rem',
-      height: "55rem"
+      height: '55rem',
     });
 
     dialogRef.afterClosed().subscribe((result: any) => {
