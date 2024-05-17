@@ -94,19 +94,4 @@ export class SnTestListComponent implements OnInit {
     console.log(index, item.data);
     return (index + 1) % 2 !== parseInt(item.data[0][0]) % 2;
   }
-
-  async showLog(): Promise<TableData> {
-    const endpoints: string[] = ['title', 'status', 'dateHourProcess', 'logs'];
-    let valores: any = '';
-    for (let i of endpoints) {
-      const dataTeste = await this.monitoringService.getLogDataTest(
-        this.dataSource[0].clientInProcess,
-        this.dataSource[0].databaseInProcess,
-        i
-      );
-      valores += dataTeste;
-    }
-
-    return valores;
-  }
 }
