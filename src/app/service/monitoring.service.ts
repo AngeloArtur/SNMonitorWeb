@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
+import {
+  AngularFireDatabase,
+  AngularFireList,
+} from '@angular/fire/compat/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -7,12 +10,16 @@ import { formatDate } from '@angular/common';
 import { Infor, InforLog } from '../interfaces/Infor.interface';
 import { Register } from '../interfaces/Register.interface';
 import { Token } from '../interfaces/DropBoxEntry.interface';
-import { GetLog, TestData, logMonitoring } from '../interfaces/LogMonitoring.interface';
+import {
+  GetLog,
+  TestData,
+  logMonitoring,
+} from '../interfaces/LogMonitoring.interface';
+import { LogData } from '../interfaces/LogData.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class MonitoringService {
   constructor(private db: AngularFireDatabase) {}
 
@@ -219,6 +226,7 @@ export class MonitoringService {
     }
   }
 
+
   updateRefresh(refresh: boolean): Promise<void> {
     return this.db.database.ref(`test/settings/refresh`).set(refresh);
   }
@@ -236,10 +244,8 @@ export class MonitoringService {
       .ref('test/settings/numberTentativaMax')
       .set(attemps);
   }
-  
+
   updateLastLines(lines: number) {
-    return this.db.database
-      .ref('test/settings/numberlastFiveLines')
-      .set(lines);
+    return this.db.database.ref('test/settings/numberlastFiveLines').set(lines);
   }
 }
