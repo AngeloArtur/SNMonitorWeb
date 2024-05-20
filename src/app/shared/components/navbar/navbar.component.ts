@@ -3,6 +3,7 @@ import { AuthService } from '../../../service/auth.service';
 import { ConfigDropboxDialogComponent } from '../config-dropbox-dialog/config-dropbox-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DropboxService } from '../../../service/dropbox.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,15 +12,20 @@ import { DropboxService } from '../../../service/dropbox.service';
 })
 export class NavbarComponent implements OnInit {
   user: any;
+  currentPath: string = '';
   constructor(
     public auth: AuthService,
     public dialog: MatDialog,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.user = this.auth.UserAuth();
+    this.router.events.subscribe(() => {
+      this.currentPath = this.router.url;
+    });
   }
-  
+
   async perfil(): Promise<void> {
     try {
       this.auth.navigate(`User/Perfil/${this.user.uid}`);
@@ -61,5 +67,13 @@ export class NavbarComponent implements OnInit {
     } catch (error) {
       console.error('Erro ao obter informações do usuário:', error);
     }
+  }
+
+  signOut(): void {
+    this.auth.navigate('Monitoring');
+  }
+
+  isOnMonitoring(path:string) {
+    return this.currentPath === path ;
   }
 }

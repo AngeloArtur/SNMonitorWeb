@@ -5,10 +5,16 @@
       <br />
       <i>{{ this.user.name }}</i>
     </h2>
-
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon><img src="../../assets/menu.svg" alt="" /></mat-icon>
-    </button>
+    <div class="menu-buttons">
+     @if(!isOnMonitoring('/Monitoring')) {
+       <button class="logout" (click)="signOut()">
+         <mat-icon><img src="../../assets/voltar.svg" alt="" /></mat-icon>
+       </button>
+     }
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon><img src="../../assets/menu.svg" alt="" /></mat-icon>
+      </button>
+    </div>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="perfil()">
         <span>Perfil</span>
