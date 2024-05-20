@@ -5,12 +5,24 @@
   box-sizing: border-box;
 }
 
+.button_snTest {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+}
+
 .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+mat-card .card-info {
+  width: 100%;
+  height: 3rem;
+}
 .card-title {
   padding: 1rem;
 }
@@ -22,6 +34,7 @@
 }
 
 .card-content {
+  padding-top: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -30,16 +43,21 @@
 }
 
 .card-item {
-  display: block;
-  align-items: center;
-  height: 18rem;
+  display: inline-block;
+  align-content: center;
+  height: 20rem;
+  background-color: white;
 }
-/* .card-item {
-  border: 1px solid black;
-  width: 32rem;
-  height: 14rem;
-  padding: 1rem;
-  box-sizing: border-box;
+
+.card-grid {
+  display: inline-block;
+  align-content: center;
+  height: 38rem;
+  background-color: white;
+}
+/* 
+.card-grid::-webkit-scrollbar {
+  width: 1rem;
 } */
 
 .col_right, .row_right, .row_right .info_lista_clientes {
@@ -57,25 +75,14 @@
 
 mat-card-content {
   width: 100%;
-  height: 55vh;
   padding: 3rem;
   overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
   border-radius: .5rem;
+  border: .8px solid rgba(0, 0, 0, 0.1);
 }
 
 .data-list {
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: medium;
   font-family: 'DM Sans', sans-serif;
-}
-
-.button_snTest {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
 }

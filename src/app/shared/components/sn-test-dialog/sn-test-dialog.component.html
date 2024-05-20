@@ -1,40 +1,41 @@
-<nav>
-  <div class="menu">
-    <h2>
-      SN Monitor
-      <br />
-      <i>{{ this.user.name }}</i>
-    </h2>
-    <button class="logout" (click)="signOut()">
-      <mat-icon><img src="../../assets/voltar.svg" alt="" /></mat-icon>
-    </button>
-  </div>
-</nav>
+<app-navbar></app-navbar>
 
 <div class="container_snTest">
   <div class="button_snTest">
     <button mat-stroked-button color="primary" (click)="setRefreshTrue()">
-      Refresh
+      <abbr title="refresh"
+        ><span class="material-symbols-outlined"> refresh </span>
+        </abbr>
     </button>
-    <button mat-stroked-button color="primary" (click)="setRestartTrue()">
-      Restart App
+    <button mat-stroked-button color="primary" (click)="[setRestartTrue()]">
+      <abbr title="restart"
+        ><span class="material-symbols-outlined"> reset_wrench </span>
+        </abbr>
     </button>
     <button mat-stroked-button color="primary" (click)="openDialog()">
-      Ajustes
+      <abbr title="Settings"
+        ><span class="material-symbols-outlined"> settings </span>
+        </abbr>
     </button>
     <button mat-stroked-button color="primary" (click)="openDialogClientes()">
-      Clientes
+      <abbr title="Clients">
+        <span class="material-symbols-outlined"> group </span>
+        </abbr>
     </button>
   </div>
-  
+
   <div class="info_lista_clientes">
     <div class="info_snTest">
       <h2 class="title_info">Log</h2>
     </div>
     <div class="content-box">
       <div class="card-title">
-        <div class="card-header">
-          <span>Titulo</span>
+        <div class="card-content">
+          <mat-card-content class="card-info">
+            <p>
+              Status: <strong>{{ vStatus }}</strong>
+            </p>
+          </mat-card-content>
         </div>
         <div class="card-content">
           <mat-card-content
@@ -44,24 +45,19 @@
           ></mat-card-content>
         </div>
       </div>
-      <mat-card class="card-info">
-        <p>Status: <strong>{{ vStatus }}</strong> </p>
-      </mat-card>
+
       <div class="exemplo-box">
-        <mat-card-content *ngIf="logData | json">
-          <div class="card-info">
-            <p>vData</p>
+        <div class="card-info">
+          <mat-card-content class="card-grid" *ngIf="logData | json">
             <p [innerHTML]="vData" class="data-list"></p>
-          </div>
-        </mat-card-content>
-        <mat-card-content *ngIf="logData | json">
-          <div class="card-info">
-            <p>vLog</p>
+          </mat-card-content>
+        </div>
+        <div class="card-info">
+          <mat-card-content class="card-grid" *ngIf="logData | json">
             <p [innerHTML]="vLog" class="data-list"></p>
-          </div>
-        </mat-card-content>
+          </mat-card-content>
+        </div>
       </div>
     </div>
   </div>
-
 </div>

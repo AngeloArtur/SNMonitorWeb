@@ -167,7 +167,11 @@ export class SnTestDialogComponent implements OnInit {
           this.vData = dataTeste.toString();
           break;
         case 'logs':
-          this.vLog = dataTeste.toString();
+          this.vLog = dataTeste
+            .toString()
+            .split(
+              '//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////'
+            );
           break;
       }
     }
