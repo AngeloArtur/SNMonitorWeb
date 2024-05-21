@@ -10,6 +10,7 @@ import {ThemePalette, provideNativeDateAdapter} from '@angular/material/core';
 import { format } from 'date-fns';
 import { DropBoxEntry } from '../interfaces/DropBoxEntry.interface';
 import { Banco, Monitoring, logMonitoring } from '../interfaces/LogMonitoring.interface';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-monitoring',
@@ -18,7 +19,7 @@ import { Banco, Monitoring, logMonitoring } from '../interfaces/LogMonitoring.in
   providers: [provideNativeDateAdapter()],
 })
 export class MonitoringComponent implements OnInit, DoCheck {
-  // @ViewChild(MatAccordion) accordion!: MatAccordion;
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
   statusAppsActive: string[] = [];
 
   statusApps = [
