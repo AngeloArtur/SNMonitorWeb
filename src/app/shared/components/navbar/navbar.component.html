@@ -1,0 +1,45 @@
+<nav>
+  <div class="menu">
+    <h2>
+      SN Monitor
+      <br />
+      <i>{{ this.user.name }}</i>
+    </h2>
+    <div class="menu-buttons">
+     @if(!isOnMonitoring('/Monitoring')) {
+       <button class="logout" (click)="signOut()">
+         <mat-icon><img src="../../assets/voltar.svg" alt="" /></mat-icon>
+       </button>
+     }
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon><img src="../../assets/menu.svg" alt="" /></mat-icon>
+      </button>
+    </div>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="perfil()">
+        <span>Perfil</span>
+      </button>
+      <button mat-menu-item (click)="passwordNew()">
+        <span>Alterar Senha</span>
+      </button>
+      <button mat-menu-item (click)="config()">
+        <span>Configuração</span>
+      </button>
+      <button mat-menu-item [matMenuTriggerFor]="submenu">Cadastro</button>
+      <button mat-menu-item (click)="snTest()">
+        <span>SNTest</span>
+      </button>
+      <mat-menu #submenu="matMenu">
+        <button mat-menu-item (click)="addCompany()">
+          <span>Empresa</span>
+        </button>
+        <button mat-menu-item (click)="addUser()">
+          <span>Usuário</span>
+        </button>
+      </mat-menu>
+      <button mat-menu-item (click)="auth.signOut()">
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+  </div>
+</nav>

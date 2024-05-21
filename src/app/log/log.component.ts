@@ -5,70 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MonitoringService } from '../service/monitoring.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { provideNativeDateAdapter } from '@angular/material/core';
-
-export interface Infor {
-  [key: string]: {
-    [date: string]: {
-      shifts: {
-        SizeByte?: any;
-        SizeMbGb?: any;
-        backup?: {
-          end?: any;
-          start?: any;
-          erro?: any;
-        };
-        freeSpace?: any;
-        last5Line?: any;
-        lastLine?: any;
-        sizeDataBase?: any;
-        totalSpace?: any;
-        upload?: {
-          erro?: any;
-          start?: any;
-          end?: any;
-        };
-      }[];
-    };
-  };
-}
-
-export interface InforLog {
-    [date: string]: {
-      description: string;
-  };
-}
-
-export interface informationLog {
-  date: string;
-  shifts: string;
-}
-
-export interface information {
-  daterow:any;
-  dataBase: any;
-  date: any;
-  shift: any;
-  SizeByte: any;
-  SizeMbGb: any;
-  backup: {
-    erro: any;
-    start: any;
-    end: any;
-  };
-  freeSpace: any;
-  last5Line: any;
-  lastLine: any;
-  sizeDataBase: any;
-  totalSpace: any;
-  upload: {
-    erro: any;
-    start: any;
-    end: any;
-  };
-}
+import { information } from '../interfaces/Information.interface';
 
 const today = new Date();
-
 const yesterday = new Date();
 yesterday.setDate(today.getDate() - 7);
 
@@ -284,5 +223,6 @@ export class LogComponent {
       return numero < 10 ? `0${numero}` : numero;
   }
 
+ 
   
 }

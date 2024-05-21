@@ -1,0 +1,14 @@
+.logDataList{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 250px;
+}
+
+mat-dialog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
