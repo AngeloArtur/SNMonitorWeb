@@ -2,12 +2,13 @@
 
 <div class="container_snTest">
   <div class="button_snTest">
-    <button mat-stroked-button color="primary" (click)="setRefreshTrue()">
+
+    <button mat-stroked-button color="primary" (click)="[setRefreshTrue(), openSnackBar('Valor do refresh alterado!', 'fechar')]">
       <abbr title="refresh"
         ><span class="material-symbols-outlined"> refresh </span>
         </abbr>
     </button>
-    <button mat-stroked-button color="primary" (click)="[setRestartTrue()]">
+    <button mat-stroked-button color="primary" (click)="[setRestartTrue(), openSnackBar('Valor do restart alterado!', 'fechar')]">
       <abbr title="restart"
         ><span class="material-symbols-outlined"> reset_wrench </span>
         </abbr>
@@ -31,7 +32,7 @@
     <div class="content-box">
       <div class="card-title">
         <div class="card-content">
-          <mat-card-content class="card-info">
+          <mat-card-content class="card-info card-status">
             <p>
               Status: <strong>{{ vStatus }}</strong>
             </p>
@@ -39,7 +40,7 @@
         </div>
         <div class="card-content">
           <mat-card-content
-            class="card-item"
+            class="card-item card-item-colors"
             *ngFor="let parts of titleParts"
             [innerHTML]="parts"
           ></mat-card-content>

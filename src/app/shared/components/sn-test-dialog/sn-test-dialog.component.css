@@ -2,6 +2,7 @@
   margin-top: 6rem;
   padding: 1rem;
   height: calc(100vh - 6rem);
+  font-family: 'DM Sans', sans-serif;
   box-sizing: border-box;
 }
 
@@ -55,10 +56,6 @@ mat-card .card-info {
   height: 38rem;
   background-color: white;
 }
-/* 
-.card-grid::-webkit-scrollbar {
-  width: 1rem;
-} */
 
 .col_right, .row_right, .row_right .info_lista_clientes {
   padding: 1rem;
@@ -77,12 +74,16 @@ mat-card-content {
   width: 100%;
   padding: 3rem;
   overflow-y: auto;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15); */
   border-radius: .5rem;
   border: .8px solid rgba(0, 0, 0, 0.1);
+  font-family: 'DM Sans', sans-serif;
 }
 
 .data-list {
   font-size: medium;
-  font-family: 'DM Sans', sans-serif;
+}
+
+.title_info {
+  font-size: large;
 }

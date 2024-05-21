@@ -7,6 +7,7 @@ import { SnTestLogComponent } from '../sn-test-log/sn-test-log.component';
 import { SnTestListComponent } from '../sn-test-list/sn-test-list.component';
 import { TableData } from '../../../interfaces/TableData.interface';
 import { TestData } from '../../../interfaces/LogMonitoring.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sn-test-dialog',
@@ -38,7 +39,8 @@ export class SnTestDialogComponent implements OnInit {
   constructor(
     private monitoringService: MonitoringService,
     public auth: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {
     this.savedPositions = [...this.arraySupermercados];
   }
@@ -182,40 +184,6 @@ export class SnTestDialogComponent implements OnInit {
     this.titleParts = this.vTitle.split(regex);
   }
 
-  // async showLogData(): Promise<void> {
-  //   try {
-  //     const dataTeste = await this.monitoringService.getLogDataTest(
-  //       this.dataSource?.clientInProcess,
-  //       this.dataSource?.databaseInProcess,
-  //       'title'
-  //     );
-  //     this.vTitle = dataTeste?.toString();
-  //     const dataTeste1 = await this.monitoringService.getLogDataTest(
-  //       this.dataSource?.clientInProcess,
-  //       this.dataSource?.databaseInProcess,
-  //       'status'
-  //     );
-  //     this.vStatus = dataTeste1;
-
-  //     console.log('dataTeste', dataTeste);
-  //     console.log('dataTeste1', dataTeste1);
-  //     const dataTeste2 = await this.monitoringService.getLogDataTest(
-  //       this.dataSource?.clientInProcess,
-  //       this.dataSource?.databaseInProcess,
-  //       'dateHourProcess'
-  //     );
-  //     this.vData = dataTeste2;
-  //     const dataTeste3 = await this.monitoringService.getLogDataTest(
-  //       this.dataSource?.clientInProcess,
-  //       this.dataSource?.databaseInProcess,
-  //       'logs'
-  //     );
-  //     this.vLog = dataTeste3;
-  //   } catch (error) {
-  //     console.error('Erro ao obter dados do log:', error);
-  //   }
-  // }
-
   async openDialog() {
     const dialogRef = this.dialog.open(SnTestLogComponent, {
       width: '50rem',
@@ -235,5 +203,9 @@ export class SnTestDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
     });
+  }
+
+  openSnackBar(message: any, action: any) {
+    this.snackbar.open(message, action);
   }
 }

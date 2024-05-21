@@ -485,20 +485,7 @@ export class AuthService {
       }
     }
 
-    let mensagem = saudacao;
-    mensagem += `<br/><br/>`;
-    mensagem += `Prezado cliente, gostaria de informar que o backup do(s) dia(s) `;
-    mensagem += situation;
-    mensagem += `<br/><br/>`;
-    mensagem += `Solicitamos que o Responsável TI da loja, entre em contato pelo chat da VRFortaleza para resolvermos esta pendência.`;
-    mensagem += `<br/><br/>`;
-    mensagem += `Grato desde já, aguardo retorno.`;
-    mensagem += `<br/><br/>`;
-    mensagem += `Atenciosamente,`;
-    mensagem += `<br/>`;
-    mensagem += `${this.user.name} - ${this.user.role}.`;
-    mensagem += `<br/>`;
-    mensagem += `VRFortaleza`;
+    let mensagem = `${saudacao} <br/><br/>Prezado cliente, gostaria de informar que o backup do(s) dia(s) ${situation}<br/><br/>Solicitamos que o Responsável TI da loja, entre em contato pelo chat da VRFortaleza para resolvermos esta pendência.<br/><br/>Grato desde já, aguardo retorno.<br/><br/>Atenciosamente,<br/>${this.user.name} - ${this.user.role}.<br/>VRFortaleza`;
     
     const emailRemetente = (await this.MonitoringService.getDatatoken()).remetente;
     const emaildestinatariosCopy = (await this.MonitoringService.getDatatoken()).destinatariosCopy;

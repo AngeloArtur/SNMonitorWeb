@@ -4,13 +4,13 @@ import { MonitoringService } from '../../../service/monitoring.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TableData } from '../../../interfaces/TableData.interface';
 import { TableDataLog } from '../../../interfaces/TableDataLog.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-sn-test-log',
   templateUrl: './sn-test-log.component.html',
   styleUrls: ['./sn-test-log.component.css'],
 })
-
 export class SnTestLogComponent implements OnInit {
   logData: TableDataLog | null = null;
   myForm: FormGroup = this.fb.group({
@@ -21,7 +21,8 @@ export class SnTestLogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: TableData,
     private monitoringService: MonitoringService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -55,7 +56,8 @@ export class SnTestLogComponent implements OnInit {
     const numberValue = this.myForm.get('numberField')?.value;
     const numberValue1 = this.myForm.get('numberField1')?.value;
     if (this.myForm.valid) {
-      this.setData(numberValue, numberValue1);
+      this.setData(numberValue, numberValue1);  
+      this.openSnackBar('Ajustado com sucesso!', 'fechar');
       console.log('Number Value:', numberValue);
       console.log('Number Value:', numberValue1);
     } else {
@@ -98,5 +100,9 @@ export class SnTestLogComponent implements OnInit {
     } catch (error) {
       console.error('Erro ao obter dados do Firebase:', error);
     }
+  }
+
+  openSnackBar(message: any, action: any) {
+    this.snackbar.open(message, action);
   }
 }
